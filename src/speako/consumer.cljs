@@ -112,7 +112,7 @@
         (consume-union [_ typename constituents]
           (let [types (map #(get @type-map %) constituents)
                 descriptor {:name typename :types types
-                            :resolveType (fn [value] (let [fields (keys (js->clj value))]
+                            :resolveType (fn [value] (let [fields (keys (first (js->clj value)))]
                                                        (get @type-map (first (get @fields-map fields)))))}
                 res (gql.GraphQLUnionType. (clj->js descriptor))]
             (swap! type-map assoc typename res)
